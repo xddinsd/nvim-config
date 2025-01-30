@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # Reading paths which are saved with lua config
-source /home/xddinsd/dotfiles/.config/nvim/lua/config/scripts/open-nvim-tree-file-in-new-terminal/.file_paths.conf
+source ~/.config/nvim/lua/config/scripts/open-nvim-tree-file-in-new-terminal/.file_paths.conf
 
 # Moving to directory after script closes
 cd "$DIR_PATH" || exit

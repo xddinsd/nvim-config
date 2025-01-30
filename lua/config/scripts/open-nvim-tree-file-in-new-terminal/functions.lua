@@ -1,5 +1,5 @@
 
-local folderPath    = "/home/xddinsd/dotfiles/.config/nvim/lua/config/scripts/open-nvim-tree-file-in-new-terminal"
+local folderPath    = os.getenv("HOME") .. "/.config/nvim/lua/config/scripts/open-nvim-tree-file-in-new-terminal"
 
 function save_dir_under_nvim_tree_cursor()
     -- Get file and folder dirs from cursor in nvim-tree
