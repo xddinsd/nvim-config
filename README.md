@@ -18,7 +18,16 @@ Multi-window config for data engineering.
 
 
 #### Requirements
+* git
 * [Neovim](https://github.com/neovim/neovim) 0.10+
 
 ### Installation
-* 
+```bash
+mkdir -p ~/.config/nvim
+```
+```bash
+cd ~/.config/nvim
+```
+```bash
+git clone https://github.com/xddinsd/nvim-config.git ./
+```
