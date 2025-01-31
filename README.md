@@ -3,9 +3,6 @@
 Multi-window config for data engineering.
 
 
-> At one point, I ended up using Vim for work for two months instead of VS Code.  
-> I managed multiple workflows simultaneously with the help of small scripts, and it dawned on me: this is the perfect job for a slightly customized Neovim.
-
 ## Features
 * Easy and resource-effective plugins management                              ([Lazy.nvim](https://github.com/folke/lazy.nvim))
 * File explorer with hotkeys to open folder/file in dedicated terminal/nvim   ([nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) with custom lua&zsh module)
