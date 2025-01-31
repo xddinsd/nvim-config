@@ -1,12 +1,14 @@
-## Xddinsd's neovim config
+# Xddinsd's neovim config
 
 Multi-window config for data engineering.
 
 
 > At some point I found myself using vim for work for a two months instead of VSCODE.
-> A lot of different workflows managed same time with small scripts - that's a perfect job for slightly modified neovim
+> A lot of different workflows managed same time with small scripts - that's a perfect job for a slightly modified neovim
 
-### Features
+## 
+
+## Features
 * Easy and resource-effective plugins management                              ([Lazy.nvim](https://github.com/folke/lazy.nvim))
 * File explorer with hotkeys to open folder/file in dedicated terminal/nvim   ([nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) with custom lua&zsh module)
 * File search and history                                                     ([telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)/[file-history](https://github.com/dawsers/telescope-file-history.nvim))
@@ -16,11 +18,38 @@ Multi-window config for data engineering.
 * Dark color scheme                                                           ([tokyonight.nvim](https://github.com/folke/tokyonight.nvim))
 * Colored identations                                                         ([indent-blackline](https://github.com/lukas-reineke/indent-blankline.nvim))
 
+### Config structure
 
-#### Requirements
-* git
-* [Neovim](https://github.com/neovim/neovim) 0.10+
+### Requirements
+* C compiler in path, libstdc++
+* git >= 2.19
+* Python >= 3.9
+* [Neovim](https://github.com/neovim/neovim) >= 0.10
+* [luarocks](https://github.com/luarocks/luarocks?tab=readme-ov-file)
 
+  #### Optional requirements
+  * Java-17-openJDK in path (only for Scala LSP 'Metals'. More info in [issue](https://github.com/scalameta/metals/issues/6952))
+  
+    ##### LSP servers
+    > Required for linting, autocompletion, debugging and other launguage-specific features.
+    > Most of them are written in pure lua so it doesn't require system-wide installation
+    * Fish:                       [fish-lsp](https://github.com/ndonfris/fish-lsp)
+    * Vim laungiage:              [vim-language-server](https://github.com/prabirshrestha/vim-lsp)
+    * Cmake:                      [pip: cmake-language-server](https://github.com/regen100/cmake-language-server)
+    * SCSS, SASS:                 [some-sass-language-server](https://github.com/wkillerud/some-sass)
+    * Terraform:                  [terraform-lsp](https://github.com/juliosueiras/terraform-lsp)
+    * HTML, CSS, JSON:            [vscode-langservers-extracted](https://github.com/hrsh7th/vscode-langservers-extracted)
+    * LATEX, markdown:            [ltex-ls-plus-bin](https://github.com/ltex-plus/ltex-ls-plus)
+    * Python:                     [pip: pylyzer](https://github.com/mtshiba/pylyzer)
+    * Java:                       [java-language-server](https://github.com/georgewfraser/java-language-server)
+    * Metals:                     [metals](https://github.com/scalameta/metals)
+    * SQL:                        [sqls](https://github.com/sqls-server/sqls)
+    
+    ##### Debug
+    * Python: [debugpy](https://github.com/microsoft/debugpy)
+    * Scala:  [metals](https://github.com/scalameta/metals)
+
+  
 ### Installation
 ```bash
 mkdir -p ~/.config/nvim
