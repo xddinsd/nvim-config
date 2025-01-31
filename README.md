@@ -26,7 +26,7 @@ Multi-window config for data engineering.
 * C compiler in path, libstdc++
 * git >= 2.19
 * Python >= 3.9
-* [Neovim](https://github.com/neovim/neovim) >= 0.10
+* [Neovim](https://github.com/neovim/neovim) 0.9.0 -> 0.10.0 (0.11.dev causes errors with nvim-tree files highlighting)
 * [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 * [pip: nynvim](https://github.com/neovim/pynvim)
 * [luarocks](https://github.com/luarocks/luarocks?tab=readme-ov-file)
