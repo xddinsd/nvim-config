@@ -75,14 +75,18 @@
                 vim.opt.shiftwidth  = 4
 
         -- Convert tabs to spaces
-            vim.opt.expandtab 	= true
+            vim.opt.expandtab 	    = true
 
         -- Add identation for new line
-            vim.opt.autoindent 					= true
+            vim.opt.autoindent 		= true
 
 
     -- Vim system settings
-    
+        
+        -- Disable netrw loading for nvim-tree
+            vim.g.loaded_netrw         = 1
+            vim.g.loaded_netrwPlugin   = 1
+
         -- Use OS clipboard buffer
             vim.opt.clipboard					= 'unnamedplus'
 
