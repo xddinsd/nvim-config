@@ -3,10 +3,8 @@
 Multi-window config for data engineering.
 
 
-> At some point I found myself using vim for work for a two months instead of VSCODE.
-> A lot of different workflows managed same time with small scripts - that's a perfect job for a slightly modified neovim
-
-## 
+> At one point, I ended up using Vim for work for two months instead of VS Code.  
+> I managed multiple workflows simultaneously with the help of small scripts, and it dawned on me: this is the perfect job for a slightly customized Neovim.
 
 ## Features
 * Easy and resource-effective plugins management                              ([Lazy.nvim](https://github.com/folke/lazy.nvim))
@@ -19,6 +17,10 @@ Multi-window config for data engineering.
 * Colored identations                                                         ([indent-blackline](https://github.com/lukas-reineke/indent-blankline.nvim))
 
 ### Config structure
+`./lua/config/lazy.lua`: Set vim options and load package manager 
+`./lua/config/scripts/*`: Custom scripts
+`./lua/config/hotkeys.lua`: Mappings for all hotkeys (loads scripts)
+`./lua/plugins/*`: Plugin settings
 
 ### Requirements
 * C compiler in path, libstdc++
