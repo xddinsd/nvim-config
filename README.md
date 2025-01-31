@@ -25,6 +25,7 @@ Multi-window config for data engineering.
 * git >= 2.19
 * Python >= 3.9
 * [Neovim](https://github.com/neovim/neovim) >= 0.10
+* [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 * [pip: nynvim](https://github.com/neovim/pynvim)
 * [luarocks](https://github.com/luarocks/luarocks?tab=readme-ov-file)
 
