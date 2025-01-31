@@ -24,7 +24,6 @@ Multi-window config for data engineering.
 * C compiler in path, libstdc++
 * git >= 2.19
 * Python >= 3.9
-* Lua == 5.1
 * [Neovim](https://github.com/neovim/neovim) >= 0.10
 * [pip: nynvim](https://github.com/neovim/pynvim)
 * [luarocks](https://github.com/luarocks/luarocks?tab=readme-ov-file)
