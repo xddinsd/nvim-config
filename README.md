@@ -46,7 +46,7 @@ Multi-window config for data engineering.
     * SQL:                        [sqls](https://github.com/sqls-server/sqls)
     
     ##### Debug
-    * Python: [debugpy](https://github.com/microsoft/debugpy)
+    * Python: [pip: debugpy](https://github.com/microsoft/debugpy)
     * Scala:  [metals](https://github.com/scalameta/metals)
 
   
