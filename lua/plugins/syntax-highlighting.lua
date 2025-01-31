@@ -1,6 +1,7 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
+    build = ":TSUpdate",
+    opts  = {
         ensure_installed = {
             -- Other
             "git_config"                        ,
