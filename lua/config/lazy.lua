@@ -93,8 +93,10 @@
         -- Disable swapfile
             vim.opt.swapfile 					= false
 
-        -- Backup dir (possibly overrided by telescope-file-history)
-            vim.opt.backupdir					= '~/.cache/nvim'
+        -- Custom tmp files dirs
+            vim.opt.directory					= vim.fn.stdpath('config') .. '/.swp'
+            vim.opt.undodir					    = vim.fn.stdpath('config') .. '/.undo'
+            vim.opt.backupdir					= vim.fn.stdpath('config') .. '/.backup'
 
     -- Other
         -- Highlight matching brackets
