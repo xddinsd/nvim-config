@@ -97,7 +97,7 @@ return {
     -- LSP status notifications
     {
         "j-hui/fidget.nvim",
-        opts = { }, },
+        opts = { },             },
 
     -- Autocomplete
     {
@@ -116,12 +116,6 @@ return {
             local autocomplete_enabled  = false -- On startup autocomplete is disabled
             local window_transparency   = 20
             local hint_max_len          = 20
-
-            local function toggle_autocomplete()
-                autocomplete_enabled    = not autocomplete_enabled
-                local new_autocomplete  = autocomplete_enabled and { require('cmp.types').cmp.TriggerEvent.TextChanged } or {}
-                cmp.setup({
-                    completion = { autocomplete = new_autocomplete } })                                                         end
 
             cmp.setup({
                 snippet = {
@@ -145,12 +139,6 @@ return {
 
                 -- Key mappings
                 mapping = {
-                    ['<C-c>'] = function(fallback)
-                                    toggle_autocomplete()
-                                    if cmp.visible() then
-                                        cmp.close()
-                                    else
-                                        cmp.complete()      end end,
                     ['<Tab>']       = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                     ['<S-Tab>']     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
                     ['<CR>']        = cmp.mapping.confirm({ select = true }), },

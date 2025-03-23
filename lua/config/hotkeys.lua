@@ -78,7 +78,13 @@ local function mergeTables(...)
 
     -- Plugin hotkeys
         -- Hotkeys popup (which-key)
-            -- <leader>?        = Show hotkeys popup
+            keymap(
+                {'n', 'v'},
+                '<C-h>',
+                ':lua require("which-key").show({ global = true, loop = true }) <CR>',
+                mergeTables(
+                    hotkey_default_opts,
+                    { desc = 'Show hotkeys popup' } )   )
 
         -- File-explorer(nvim-tree)
 
@@ -210,6 +216,16 @@ local function mergeTables(...)
                     hotkey_default_opts,
                     { desc = '[LSP] Cycle linter severity (Info/Warning/Error)' } )   )
 
+            -- Autocomplete
+                -- Tab, Shift-tab and Esc = Choose autocomplete options ( defined in plugins.lsp )
+                require("config.scripts.toggle-autocomplete.functions")
+                keymap(
+                    'n',
+                    '<leader>a',
+                    ':lua toggle_autocomplete() <CR>',
+                    mergeTables(
+                        hotkey_default_opts,
+                        { desc = '[LSP] Toggle autocomplete'                    } )    )
 
 
         -- Debugger (nvim-dap & nvim-dap-ui)
@@ -326,4 +342,6 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = '[Debugger] Go to main window'             } )   )
+
+
 
