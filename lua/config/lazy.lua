@@ -101,6 +101,11 @@
     -- Other
         -- Highlight matching brackets
             vim.opt.showmatch 					= true
+        -- Remove EOL trailing whitespaces on file save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = "*",
+                callback = function()
+                    vim.cmd("%s/\\s\\+$//e")                end, })
 
 
 -- Setup lazy.nvim
@@ -120,5 +125,6 @@ require("config.hotkeys")
 
 -- Load yql syntax highliting
 require("config.scripts.yql-syntax-highliting.config").setup()
+
 
 

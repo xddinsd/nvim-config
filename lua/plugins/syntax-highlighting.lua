@@ -1,47 +1,10 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    opts  = {
-        ensure_installed = {
-            -- Other
-            "git_config"                        ,
-            "git_rebase"                        ,
-            "gitattributes"                     ,
-            "gitcommit"                         ,
-            "gitignore"                         ,
-            "query"                             ,
-            
-            -- Shell
-            "bash"                              ,
-            "fish"                              ,
-            
-            -- Data types
-            "json"                              ,
-            "csv"                               ,
-            "yaml"                              ,
-            "toml"                              ,
+    config = function ()
+          local configs = require("nvim-treesitter.configs")
 
-            -- Config langs
-            "lua"                               ,
-            "hyprlang"                          ,
-            "vim"                               ,
-            "make"                              ,
-            "nix"                               ,
-            "css"                               ,
-            "scss"                              ,
-            "terraform"                         ,
-
-            -- Info langs
-            "html"                              ,
-            "markdown"                          ,
-            "markdown_inline"                   ,
-            "regex"                             ,
-            "latex"                             ,
-
-            -- Main
-            "python"                            ,
-            "pip-requirements"                  ,
-            "java"                              ,
-            "scala"                             ,
-            "sparql"                            ,
-            "sql"                               , }, }, }
+          configs.setup({
+                ensure_installed = "all"                ,
+                auto_install     = true                 ,
+                highlight        = { enable = true }    , })    end, }

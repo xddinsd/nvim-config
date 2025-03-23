@@ -13,7 +13,7 @@ return {
             -- Window settings, same as in nvim-cmp
                   vim.lsp.handlers["textDocument/hover"]          = vim.lsp.with(
                                                                           vim.lsp.handlers.hover, {
-                                                                              border = "single",  
+                                                                              border = "single",
                                                                               winblend = window_transparency })
 
                   vim.lsp.handlers["textDocument/signatureHelp"]  = vim.lsp.with(
@@ -26,8 +26,8 @@ return {
                     nvim_lsp.fish_lsp       .setup{capabilities = capabilities}
                 -- Config langs
                     nvim_lsp.luau_lsp       .setup{capabilities = capabilities} -- Lua
-                    nvim_lsp.hyprls         .setup{capabilities = capabilities} 
-                    nvim_lsp.vimls          .setup{capabilities = capabilities} 
+                    nvim_lsp.hyprls         .setup{capabilities = capabilities}
+                    nvim_lsp.vimls          .setup{capabilities = capabilities}
                     nvim_lsp.cmake          .setup{capabilities = capabilities}
                     nvim_lsp.nil_ls         .setup{capabilities = capabilities} -- Nix lang
                     nvim_lsp.somesass_ls    .setup{capabilities = capabilities} -- CSS SCSS SASS
@@ -39,15 +39,16 @@ return {
                     -- nvim_lsp.metals         .setup{capabilities = capabilities} -- Scala fast LSP with no debug support (requires self-installed metals) (to toggle uncomment and delete nvim-metals below)
 
                     -- nvim_lsp.sqlls          .setup{capabilities = capabilities} -- Turn off to deal with YQL
-                    nvim_lsp.pylyzer        .setup{capabilities = capabilities} -- Python
+                    nvim_lsp.ruff           .setup{capabilities = capabilities}
+                    -- nvim_lsp.pylyzer        .setup{capabilities = capabilities} -- Python
                                                                                             end, },
-    
+
     -- Dedicated scala LSP to provide debugger
     {
         'scalameta/nvim-metals',
         ft           = { "scala", "sbt" },
         dependencies = { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap" },
-        
+
         -- Metals settings
         opts = function()
              local metals_config = require("metals").bare_config()
@@ -91,7 +92,7 @@ return {
                     request = "launch",
                     name    = "Test build",
                     metals  = {
-                        runType = "testTarget",},},} end, },   
+                        runType = "testTarget",},},}                                                    end, },
 
     -- LSP status notifications
     {
@@ -120,7 +121,7 @@ return {
                 autocomplete_enabled    = not autocomplete_enabled
                 local new_autocomplete  = autocomplete_enabled and { require('cmp.types').cmp.TriggerEvent.TextChanged } or {}
                 cmp.setup({
-                    completion = { autocomplete = new_autocomplete } }) end
+                    completion = { autocomplete = new_autocomplete } })                                                         end
 
             cmp.setup({
                 snippet = {
@@ -149,7 +150,7 @@ return {
                                     if cmp.visible() then
                                         cmp.close()
                                     else
-                                        cmp.complete() end end,
+                                        cmp.complete()      end end,
                     ['<Tab>']       = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                     ['<S-Tab>']     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
                     ['<CR>']        = cmp.mapping.confirm({ select = true }), },
@@ -157,13 +158,13 @@ return {
                 -- LSP sources and max items shown as autocomplete hints
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp',    max_item_count = 3 },
-                    { name = 'luasnip',     max_item_count = 3 }, }, 
+                    { name = 'luasnip',     max_item_count = 3 }, },
                 {
                     { name = 'buffer',      max_item_count = 3 },
                     { name = 'path',        max_item_count = 3 }, }),
 
                 completion = {
-                    autocomplete = autocomplete_enabled }, }) end, },
+                    autocomplete = autocomplete_enabled }, })                                                                           end, },
 
     -- Debugger
     {
@@ -171,31 +172,31 @@ return {
         config = function()
             local dap = require('dap')
 
-            vim.fn.sign_define('DapBreakpoint', { 
-                                                    text    = '●', 
-                                                    texthl  = 'Error',  
-                                                    linehl  = '', 
+            vim.fn.sign_define('DapBreakpoint', {
+                                                    text    = '●',
+                                                    texthl  = 'Error',
+                                                    linehl  = '',
                                                     numhl   = '' })
-            vim.fn.sign_define('DapStopped', { 
-                                                    text    = '●', 
-                                                    texthl  = 'WarningMsg',  
-                                                    linehl  = '', 
-                                                    numhl   = '' }) end },
+            vim.fn.sign_define('DapStopped', {
+                                                    text    = '●',
+                                                    texthl  = 'WarningMsg',
+                                                    linehl  = '',
+                                                    numhl   = '' })             end },
     -- Minimal dapui
-    { 
-        "rcarriga/nvim-dap-ui", 
+    {
+        "rcarriga/nvim-dap-ui",
         dependencies = {
-            "mfussenegger/nvim-dap", 
+            "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
             "folke/lazydev.nvim" },
 
-        config = function() 
+        config = function()
             local dap, dapui = require("dap"), require("dapui")
 
             require("lazydev").setup({
                 library = { "nvim-dap-ui" }, })
             -- Listeners to open/close
-            dap.listeners.before.launch.dapui_config            = function() 
+            dap.listeners.before.launch.dapui_config            = function()
                 dapui.open()  end
 
             dap.listeners.before.event_terminated.dapui_config  = function()
@@ -212,13 +213,13 @@ return {
                             "stacks",
                             "scopes", },
                         size        = 40,
-                        position    = "left", }, }, }) end, },
-    
+                        position    = "left", }, }, })                          end, },
+
     -- Special extension to add python debug support
     {
         'mfussenegger/nvim-dap-python',
         config = function()
             local dap_python  = require('dap-python')
             local python_path = '/usr/bin/python'
-            dap_python.setup(python_path)  end }, }
+            dap_python.setup(python_path)               end }, }
 

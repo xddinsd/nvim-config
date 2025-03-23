@@ -3,6 +3,7 @@ return {
     -- File explorer
     {
         'nvim-tree/nvim-tree.lua',
+        dependencies = { 'echasnovski/mini.icons', 'nvim-tree/nvim-web-devicons' },
         config = function()
             require'nvim-tree'.setup {
                 actions = {
@@ -13,21 +14,21 @@ return {
     -- File search
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' }, 
+        dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('telescope').setup {
                 defaults = {
                     mappings = {
                         n = {
-                            ["q"]       = require('telescope.actions').close,      
+                            ["q"]       = require('telescope.actions').close,
                             ["<Esc>"]   = require('telescope.actions').close,  } }, }, } end, },
 
     -- File history
     {
-        -- This extension is making a local git repository 
+        -- This extension is making a local git repository
             -- of files those are edited with nvim and tracks its changes
         'dawsers/telescope-file-history.nvim',
-        dependencies = { 'nvim-telescope/telescope.nvim' },  
+        dependencies = { 'nvim-telescope/telescope.nvim' },
         config = function()
             require('file_history').setup {
                 backup_dir  = "~/.nvim-file-history-git",
