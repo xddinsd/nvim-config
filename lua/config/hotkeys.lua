@@ -21,6 +21,7 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = 'Paste'  } )   )
+
             keymap(
                 {'n', 'v'},
                 'd',
@@ -28,6 +29,7 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = 'Delete' } )   )
+
             keymap(
                 {'n', 'v'},
                 'x',
@@ -35,6 +37,7 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = 'Cut'    } )   )
+
             keymap(
                 'v',
                 'P',
@@ -42,6 +45,7 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = 'Paste and copy selected area'   } )   )
+
             keymap(
                 {'n', 'v'},
                 'D',
@@ -49,6 +53,7 @@ local function mergeTables(...)
                 mergeTables(
                     hotkey_default_opts,
                     { desc = 'Delete and copy selected area'  } )   )
+
             keymap(
                 {'n', 'v'},
                 'X',
@@ -65,7 +70,7 @@ local function mergeTables(...)
             ':noh<CR>',
             mergeTables(
                 hotkey_default_opts,
-                { desc = 'Deselect'     } )   )
+                { desc = 'Deselect'                         } )   )
 
         keymap(
             'n',
@@ -73,7 +78,48 @@ local function mergeTables(...)
             ':bd!<CR>',
             mergeTables(
                 hotkey_default_opts,
-                { desc = 'Quit buffer'  } )   )
+                { desc = 'Quit buffer'                      } )   )
+
+        keymap(
+            'n',
+            '<CR>',
+            'mzo<esc>`z',
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Add new line below current line'  } )   )
+
+        keymap(
+            "v",
+            "J",
+            ":m '>+1<CR>gv=gv",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Move selected line up'            } )   )
+
+        keymap(
+            "v",
+            "K",
+            ":m '<-2<CR>gv=gv",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Move selected line down'          } )   )
+
+        keymap(
+            "n",
+            "<C-d>",
+            "<C-d>zz",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Scroll one page down'             } )   )
+
+        keymap(
+            "n",
+            "<C-u>",
+            "<C-u>zz",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Scroll one page up'               } )   )
+
 
 
     -- Plugin hotkeys
@@ -84,7 +130,7 @@ local function mergeTables(...)
                 ':lua require("which-key").show({ global = true, loop = true }) <CR>',
                 mergeTables(
                     hotkey_default_opts,
-                    { desc = 'Show hotkeys popup' } )   )
+                    { desc = 'Show hotkeys popup' } )                                   )
 
         -- File-explorer(nvim-tree)
 
