@@ -82,6 +82,14 @@ local function mergeTables(...)
 
         keymap(
             'n',
+            '<C-CR>',
+            'mzO<esc>`z',
+            mergeTables(
+                hotkey_default_opts,
+                { desc = 'Add new line above current line'  } )   )
+
+        keymap(
+            'n',
             '<CR>',
             'mzo<esc>`z',
             mergeTables(
@@ -103,7 +111,6 @@ local function mergeTables(...)
             mergeTables(
                 hotkey_default_opts,
                 { desc = 'Move selected line down'          } )   )
-
         keymap(
             "n",
             "<C-d>",
@@ -119,6 +126,22 @@ local function mergeTables(...)
             mergeTables(
                 hotkey_default_opts,
                 { desc = 'Scroll one page up'               } )   )
+
+        keymap(
+            "n",
+            "n",
+            "nzzzv",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = '[Search] Next word'               } )   )
+
+        keymap(
+            "n",
+            "N",
+            "Nzzzv",
+            mergeTables(
+                hotkey_default_opts,
+                { desc = '[Search] Previous word'           } )   )
 
 
 
