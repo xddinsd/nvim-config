@@ -8,16 +8,27 @@ Multi-window config for data engineering.
 * File explorer with hotkeys to open folder/file in dedicated terminal/nvim   ([nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) with custom lua&zsh module)
 * File search and history                                                     ([telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)/[file-history](https://github.com/dawsers/telescope-file-history.nvim))
 * Syntax highlighting                                                         ([nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter))
-* Autocomplete                                                                ([nvim-cmp](https://github.com/hrsh7th/nvim-cmp))
+* Autocomplete & snippets                                                     ([nvim-cmp](https://github.com/hrsh7th/nvim-cmp) & [LuaSnip](https://github.com/L3MON4D3/LuaSnip))
 * Simple debugger                                                             ([nvim-dap](https://github.com/mfussenegger/nvim-dap)/[ui](https://github.com/rcarriga/nvim-dap-ui))
 * Dark color scheme                                                           ([tokyonight.nvim](https://github.com/folke/tokyonight.nvim))
 * Colored identations                                                         ([indent-blackline](https://github.com/lukas-reineke/indent-blankline.nvim))
 
 ### Config structure
-`./lua/config/lazy.lua`: Set vim options and load package manager 
-`./lua/config/scripts/*`: Custom scripts
-`./lua/config/hotkeys.lua`: Mappings for all hotkeys (loads scripts)
-`./lua/plugins/*`: Plugin settings
+
+- `./lua/config` - All non-plugin settings
+  - `/lazy.lua`:      load package manager (loads vim options)
+  - `/vim-opts.lua`:  vim options
+  - `/hotkeys.lua`:   mappings for all hotkeys (loads scripts) 
+  - `/scripts/*/*`:   custom scripts
+
+- `./lua/plugins` - Plugins and their settings
+  - `/autocomplete.lua`: plugins for autocomplete and snippet support (loads custom snippets)
+  - `/*.lua`:            plugins
+
+- `./lua/custom-snippets` - Custom snippets
+  - `/loader.lua`:       loader for custom snippets
+  - `/*/*.lua`:          custom snippets
+                
 
 ### Requirements
 * C compiler in path, libstdc++
