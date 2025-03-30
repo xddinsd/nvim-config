@@ -63,12 +63,17 @@ Multi-window config for data engineering.
 
   
 ### Installation
-```bash
-mkdir -p ~/.config/nvim
-```
-```bash
-cd ~/.config/nvim
-```
-```bash
-git clone https://github.com/xddinsd/nvim-config.git ./
-```
+- Create dir for config (check `./lua/config/scripts` if you want to change it)
+  ```bash
+  mkdir -p ~/.config/nvim
+  ```
+  ```bash
+  cd ~/.config/nvim
+  ```
+- Clone the repo
+  ```bash
+  git clone https://github.com/xddinsd/nvim-config.git ./
+  ```
+- Open nvim and wait till all plugins are installed with lazy.nvim
+- Click Ctrl+h to toggle hotkeys hint
+- Enjoy!
