@@ -37,6 +37,9 @@ require("config.vim-opts")
 -- Load hotkeys
 require("config.hotkeys")
 
+-- Load snippets
+require("config.snippets")
+
 -- Load yql syntax highliting
 require("config.scripts.yql-syntax-highliting.config").setup()
 
