@@ -112,7 +112,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             { desc = 'Move selected line down'          } )   )
     keymap(
         "n",
-        "<C-d>",
+        "<C-j>",
         "<C-d>zz",
         mergeTables(
             hotkey_default_opts,
@@ -120,7 +120,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
 
     keymap(
         "n",
-        "<C-u>",
+        "<C-k>",
         "<C-u>zz",
         mergeTables(
             hotkey_default_opts,
