@@ -34,7 +34,7 @@ Multi-window config for data engineering.
 * C compiler in path, libstdc++
 * git >= 2.19
 * Python >= 3.9
-* [Neovim](https://github.com/neovim/neovim) 0.9.0 -> 0.10.0 (0.11.dev causes errors with nvim-tree files highlighting)
+* [Neovim](https://github.com/neovim/neovim) 0.9.0+
 * [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 * [pip: nynvim](https://github.com/neovim/pynvim)
 * [luarocks](https://github.com/luarocks/luarocks?tab=readme-ov-file)
@@ -44,26 +44,26 @@ Multi-window config for data engineering.
   
     ##### LSP servers
     > Required for linting, autocompletion, debugging and other launguage-specific features.
-    > Most of them are written in pure lua so it doesn't require system-wide installation
+    > Most of them are written in pure lua so they don't require system-wide installation. Others are listed below 
     * Fish:                       [fish-lsp](https://github.com/ndonfris/fish-lsp)
     * Vim laungiage:              [vim-language-server](https://github.com/prabirshrestha/vim-lsp)
-    * Cmake:                      [pip: cmake-language-server](https://github.com/regen100/cmake-language-server)
+    * Cmake:                      |pip| [cmake-language-server](https://github.com/regen100/cmake-language-server)
     * SCSS, SASS:                 [some-sass-language-server](https://github.com/wkillerud/some-sass)
     * Terraform:                  [terraform-lsp](https://github.com/juliosueiras/terraform-lsp)
     * HTML, CSS, JSON:            [vscode-langservers-extracted](https://github.com/hrsh7th/vscode-langservers-extracted)
     * LATEX, markdown:            [ltex-ls-plus-bin](https://github.com/ltex-plus/ltex-ls-plus)
-    * Python:                     [pip: pylyzer](https://github.com/mtshiba/pylyzer)
+    * Python:                     |pip| [pylyzer](https://github.com/mtshiba/pylyzer) & [ruff](https://github.com/astral-sh/ruff)
     * Java:                       [java-language-server](https://github.com/georgewfraser/java-language-server)
     * Metals:                     [metals](https://github.com/scalameta/metals)
     * SQL:                        [sqls](https://github.com/sqls-server/sqls)
     
     ##### Debug
-    * Python: [pip: debugpy](https://github.com/microsoft/debugpy)
+    * Python: |pip| [debugpy](https://github.com/microsoft/debugpy)
     * Scala:  [metals](https://github.com/scalameta/metals)
 
   
 ### Installation
-- Create dir for config (check `./lua/config/scripts` if you want to change it)
+- Create dir for config 
   ```bash
   mkdir -p ~/.config/nvim
   ```
@@ -75,5 +75,16 @@ Multi-window config for data engineering.
   git clone https://github.com/xddinsd/nvim-config.git ./
   ```
 - Open nvim and wait till all plugins are installed with lazy.nvim
-- Click Ctrl+h to toggle hotkeys hint
+- Click `Ctrl+h` in normal mode to toggle hotkeys hint
 - Enjoy!
+
+### Notes 
+- For terminals except alacritty or if you want to change the folder where neovim config is stored, configure manually:  \
+    `./lua/config/scripts/open-nvim-tree-file-in-new-terminal/*`                                                         \
+    This script opens a new terminal (hotkeys `Space-Enter` and `Space-t-Enter`)                                         \
+    it's implementation required use of absolete paths to store values in .conf and excplicit command to open a terminal
+
+### Troubleshooting
+- Having problems with nvim-tree in 0.11dev neovim?                              \
+  Comment 27+ line in `~/local/share/nvim/lazy/nvim-tree.lua/lua/nvim-tree.lua`. \
+  Plugin won't update (!!!) but it solves the issue                              
