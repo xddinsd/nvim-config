@@ -227,16 +227,25 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 ':Telescope file_history history<CR>',
                 mergeTables(
                     hotkey_default_opts,
-                    { desc = '[File history] Show file history'                         } )    )
+                    { desc = '[File history] Show file history'                             } )    )
+
+            keymap(
+                'n',
+                '<leader>sh',
+                ':Telescope file_history history<CR>',
+                mergeTables(
+                    hotkey_default_opts,
+                    { desc = '[File history] Show file history'                             } )    )
 
 
             keymap(
                 'n',
-                '<leader>sb',
-                ':Telescope file_history backup tag=',
+                '<leader>rb',
+                -- Copy all with :%y, :bd! to exit buffer, gg to go to the first line, VG to select all file and _p to paste
+                ':%y<CR>:bd!<CR>ggVG_p',
                 mergeTables(
                     hotkey_default_opts,
-                    { desc = '[File history] Create a backup with a tag'                } )     )
+                    { desc = '[File history] Revert backup - when backup buffer is opened'  } )     )
 
 
 
