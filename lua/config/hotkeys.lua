@@ -8,7 +8,9 @@ local function mergeTables(...)
   return result                             end
 
 local keymap              = vim.keymap.set
-local hotkey_default_opts = { noremap = true, silent = true }
+local opts_silent_noremap   = { noremap = true, silent = true }
+local opts_noremap  = { noremap = true                }
+
 
 -- Vim hotkeys
     -- Removing without copy            for p, d, x
@@ -18,7 +20,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'p',
             '"_dP',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Paste'  } )   )
 
         keymap(
@@ -26,7 +28,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'd',
             '"_d',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Delete' } )   )
 
         keymap(
@@ -34,7 +36,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'x',
             '"_x',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Cut'    } )   )
 
         keymap(
@@ -42,7 +44,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'P',
             '"p',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Paste and copy selected area'   } )   )
 
         keymap(
@@ -50,7 +52,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'D',
             'd',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Delete and copy selected area'  } )   )
 
         keymap(
@@ -58,7 +60,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'X',
             'x',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Cut and copy selected area'     } )   )
 
 
@@ -68,7 +70,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         '<C-/>',
         ':noh<CR>',
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Deselect'                         } )   )
 
     keymap(
@@ -76,7 +78,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         '<leader>bq',
         ':bd!<CR>',
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Quit buffer'                      } )   )
 
     keymap(
@@ -84,7 +86,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         '<C-CR>',
         'mzO<esc>`z',
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Add new line above current line'  } )   )
 
     keymap(
@@ -92,7 +94,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         '<CR>',
         'mzo<esc>`z',
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Add new line below current line'  } )   )
 
     keymap(
@@ -100,7 +102,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         "J",
         ":m '>+1<CR>gv=gv",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Move selected line up'            } )   )
 
     keymap(
@@ -108,14 +110,14 @@ local hotkey_default_opts = { noremap = true, silent = true }
         "K",
         ":m '<-2<CR>gv=gv",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Move selected line down'          } )   )
     keymap(
         "n",
         "<C-j>",
         "<C-d>zz",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Scroll one page down'             } )   )
 
     keymap(
@@ -123,7 +125,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         "<C-k>",
         "<C-u>zz",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = 'Scroll one page up'               } )   )
 
     keymap(
@@ -131,7 +133,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         "n",
         "nzzzv",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = '[Search] Next word'               } )   )
 
     keymap(
@@ -139,7 +141,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
         "N",
         "Nzzzv",
         mergeTables(
-            hotkey_default_opts,
+            opts_silent_noremap,
             { desc = '[Search] Previous word'           } )   )
 
 
@@ -151,7 +153,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<C-h>',
             ':lua require("which-key").show({ global = true, loop = true }) <CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = 'Show hotkeys popup' } )                                   )
 
     -- File-explorer(nvim-tree)
@@ -161,7 +163,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>fe',
             ':NvimTreeToggle<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[File explorer] Toggle file explorer'                         } )                             )
 
         keymap(
@@ -169,7 +171,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>gf',
             ':NvimTreeFindFile<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[File explorer] Find current file in file explorer'           } )                             )
 
         require("config.scripts.open-nvim-tree-file-in-new-terminal.functions")
@@ -178,7 +180,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader><CR>',
             ':lua save_dir_under_nvim_tree_cursor(); open_file_in_nvim_in_new_terminal()<CR>:NvimTreeToggle<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[File explorer] Open file in nvim in new terminal'            } )                             )
 
         require("config.scripts.open-nvim-tree-file-in-new-terminal.functions")
@@ -187,7 +189,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>t<CR>',
             ':lua save_dir_under_nvim_tree_cursor(); open_folder_in_new_terminal()<CR>:NvimTreeToggle<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[File explorer] Open folder in new terminal'                  } )                             )
 
         keymap(
@@ -195,7 +197,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>cd',
             ':lua require("nvim-tree.api").tree.change_root_to_node()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[File explorer] cd to selected directory'                     } )                             )
 
 
@@ -207,7 +209,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>ff',
                 ':lua telescope_find_files_in_nvim_tree()<CR>',
                 mergeTables(
-                    hotkey_default_opts,
+                    opts_silent_noremap,
                     { desc = '[File explorer search] Find by filename'                  } )  )
 
             require("config.scripts.telescope-find-files-in-nvim-tree.functions")
@@ -216,7 +218,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>fg',
                 ':lua telescope_grep_files_in_nvim_tree()<CR>',
                 mergeTables(
-                    hotkey_default_opts,
+                    opts_silent_noremap,
                     { desc = '[File explorer search] Find file by contents (grep-like)' } )   )
 
 
@@ -226,7 +228,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>sh',
                 ':Telescope file_history history<CR>',
                 mergeTables(
-                    hotkey_default_opts,
+                    opts_silent_noremap,
                     { desc = '[File history] Show file history'                             } )    )
 
             keymap(
@@ -234,7 +236,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>sb',
                 ':Telescope file_history backup tag=',
                 mergeTables(
-                    { noremap = true }, -- not silent
+                    opts_noremap,
                     { desc = '[File history] Create a backup with a tag'                    } )     )
 
             keymap(
@@ -243,7 +245,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 -- Copy all with :%y, :bd! to exit buffer, gg to go to the first line, VG to select all file and _p to paste
                 ':%y<CR>:bd!<CR>ggVG_p',
                 mergeTables(
-                    hotkey_default_opts,
+                    opts_silent_noremap,
                     { desc = '[File history] Revert backup - when backup buffer is opened'  } )     )
 
 
@@ -256,7 +258,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'gd',
             '<Cmd>lua vim.lsp.buf.definition()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[LSP] Go to definition'                           } )   )
 
         keymap(
@@ -264,7 +266,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             'gi',
             '<Cmd>lua vim.lsp.buf.implementation()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[LSP] Go to implementation'                       } )   )
 
         keymap(
@@ -272,7 +274,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>h',
             '<Cmd>lua vim.lsp.buf.hover()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[LSP] Show docs toast of object under the cursor' } )   )
 
         keymap(
@@ -280,7 +282,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>rn',
             '<Cmd>lua vim.lsp.buf.rename()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[LSP] Rename object under the cursor'             } )   )
 
         require("config.scripts.lsp-cycle-linter-severity.function")
@@ -289,7 +291,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>ls',
             ':lua lsp_cycle_linter_severity()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[LSP] Cycle linter severity (Info/Warning/Error)' } )   )
 
         -- Autocomplete
@@ -300,7 +302,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>a',
                 ':lua toggle_autocomplete() <CR>',
                 mergeTables(
-                    hotkey_default_opts,
+                    opts_silent_noremap,
                     { desc = '[LSP] Toggle autocomplete'                    } )    )
 
 
@@ -314,7 +316,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>dq',
             ':lua dap_close_all_windows()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Quit'                          } )   )
 
         keymap(
@@ -322,7 +324,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>dt',
             ':DapToggleRepl<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Toggle terminal'               } )   )
 
         keymap(
@@ -330,7 +332,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>dp',
             dap.continue,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Go to next debug point'        } )   )
 
         require("config.scripts.dap-toggle-breakpoints-in-visual-mode.function")
@@ -339,7 +341,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>db',
             dap.toggle_breakpoint,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Toggle breakpoint'             } )   )
 
         keymap(
@@ -347,7 +349,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>db',
             ':lua dap_toggle_breakpoints_in_visual_mode()<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Toggle breakpoint multi-line'  } )   )
 
         keymap(
@@ -355,7 +357,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>dc',
             dap.clear_breakpoints,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Clear all breakpoints'         } )   )
 
         keymap(
@@ -363,7 +365,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>do',
             dap.step_over,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Next step over function call'  } )   )
 
         keymap(
@@ -371,7 +373,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>di',
             dap.step_into,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Next step into function call'  } )   )
 
         keymap(
@@ -379,7 +381,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<leader>de',
             dap.step_out,
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Escape from function'          } )   )
 
 
@@ -392,7 +394,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<Leader>ds',
             ':lua focus_on_window(2)<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Go to stacks window'           } )   )
 
         keymap(
@@ -400,7 +402,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<Leader>dv',
             ':lua focus_on_window(1)<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Go to scopes window'           } )   )
 
         keymap(
@@ -408,7 +410,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<Leader>dl',
             ':lua focus_on_window(3)<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Go to breakpoints list window' } )   )
 
         keymap(
@@ -416,8 +418,17 @@ local hotkey_default_opts = { noremap = true, silent = true }
             '<Leader>dm',
             ':lua focus_on_window(4)<CR>',
             mergeTables(
-                hotkey_default_opts,
+                opts_silent_noremap,
                 { desc = '[Debugger] Go to main window'             } )   )
+
+    -- Nvim in browser support (firenvim)
+    keymap(
+        'n',
+        '<Leader>sl',
+        ':set lines=',
+        mergeTables(
+            opts_noremap,
+            { desc = '[Nvim-in-browser] Set window number of lines manually'    } )   )
 
 
 

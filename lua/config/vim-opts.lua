@@ -77,3 +77,11 @@
             pattern = "*",
             callback = function()
                 vim.cmd("%s/\\s\\+$//e")                end, })
+
+    -- Autocmd for firenvim font fix (https://github.com/glacambre/firenvim/issues/972)
+        vim.api.nvim_create_autocmd("UIEnter", {
+              pattern = "*",
+              callback = function()
+                  vim.cmd("if exists('g:started_by_firenvim')\nset guifont=Monaco:h18\nendif")    end  })
+
+
