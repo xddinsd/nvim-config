@@ -234,7 +234,7 @@ local hotkey_default_opts = { noremap = true, silent = true }
                 '<leader>sb',
                 ':Telescope file_history backup tag=',
                 mergeTables(
-                    hotkey_default_opts,
+                    { noremap = true }, -- not silent
                     { desc = '[File history] Create a backup with a tag'                    } )     )
 
             keymap(
