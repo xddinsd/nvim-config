@@ -231,12 +231,11 @@ local hotkey_default_opts = { noremap = true, silent = true }
 
             keymap(
                 'n',
-                '<leader>sh',
-                ':Telescope file_history history<CR>',
+                '<leader>sb',
+                ':Telescope file_history backup tag=',
                 mergeTables(
                     hotkey_default_opts,
-                    { desc = '[File history] Show file history'                             } )    )
-
+                    { desc = '[File history] Create a backup with a tag'                    } )     )
 
             keymap(
                 'n',
