@@ -1,45 +1,62 @@
 -- Luasnip
 local luasnip = require("luasnip")
 
-local snippet = luasnip.snippet
-
--- Luasnip nodes
-local snippet_node  = luasnip.snippet_node
-
-local text_node     = luasnip.text_node
-
-local insert_node   = luasnip.insert_node
-
-local function_node = luasnip.function_node
-
-local choice_node   = luasnip.choice_node
-
-local dynamic_node  = luasnip.dynamic_node
-
-local restore_node  = luasnip.restore_node
-
 -- format for defining snippets printf-like
 local format = require("luasnip.extras.fmt").fmta
 
 -- Add snippets
 luasnip.add_snippets("yaml", {
-    snippet("ts_dttm",
+    luasnip.snippet("ts_dttm",
         format(
             "Дата и время <action> <instance> (<tz_type>)",
             {
-                action   = choice_node(
+                action   = luasnip.choice_node(
                     1,
                     {
-                        text_node("создания"),
-                        text_node("обновления")         }),
+                        luasnip.text_node("создания"),
+                        luasnip.text_node("обновления")         }),
 
-                instance = insert_node(
+                instance = luasnip.insert_node(
                     2,
                     "записи"                             ),
 
-                tz_type  = choice_node(
+                tz_type  = luasnip.choice_node(
                     3,
                     {
-                        text_node("UTC Timestamp"),
-                        text_node("MSK Datetime")       })
-            }                                                       ) )         } )
+                        luasnip.text_node("UTC Timestamp"),
+                        luasnip.text_node("MSK Datetime")       })
+            }                                                           ) ),
+    luasnip.snippet("pii",
+        format(
+            [[
+            labels:
+              - pii
+            ]],
+            {
+            }                                                           ) ),
+
+    luasnip.snippet("note",
+        format(
+            [[
+
+            {% note <level> "<note_name>" %}
+
+              <note_body>
+
+            {% endnote %}
+
+            ]],
+            {
+                level     = luasnip.choice_node(
+                    1,
+                    {
+                        luasnip.text_node("info"),
+                        luasnip.text_node("warning")            }),
+
+                note_name = luasnip.insert_node(
+                    2,
+                    "Заголовок заметки"             ),
+                note_body = luasnip.insert_node(
+                    3,
+                    "Заметка"                       )
+            }                                                           ) )     } )

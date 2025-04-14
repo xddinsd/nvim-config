@@ -16,6 +16,7 @@ Multi-window config for data engineering.
 * Dark color scheme                                                           ([tokyonight.nvim](https://github.com/folke/tokyonight.nvim))
 * Colored identations                                                         ([indent-blackline](https://github.com/lukas-reineke/indent-blankline.nvim))
 * Works embed in browser                                                      ([firenvim](https://github.com/glacambre/firenvim))
+* Hotkeys are same for different layouts (ru/en preconfigured)                ([langmapper.nvim](https://github.com/Wansmer/langmapper.nvim))
 
 
 ### Config structure
@@ -96,6 +97,12 @@ Multi-window config for data engineering.
     `./lua/config/scripts/open-nvim-tree-file-in-new-terminal/*`                                                         \
     This script opens a new terminal (hotkeys `Space-Enter` and `Space-t-Enter`)                                         \
     it's implementation required use of absolete paths to store values in .conf and excplicit command to open a terminal
+
+- If you want to use different keyboard layout (not ru/en), configure langmap & langmapper.nvim manually:
+    - `./lua/config/vim-opts.lua`                       - configure langmap            (native support for nvim hotkeys on different layout)
+    - `./lua/plugins/hotkeys-per-keyboard-layout.lua`   - configure langmapper.nvim    (hack for vim.keymap.set)
+
+- Autocomplete is not supported with not-en keyboard layout ([nvim-cmp issue](https://github.com/hrsh7th/nvim-cmp/issues/2131))
 
 
 ### Troubleshooting

@@ -1,5 +1,4 @@
 -- Functions
---
 local function mergeTables(...)
   local result = {}
   for _, tbl in ipairs({...}) do
@@ -7,9 +6,13 @@ local function mergeTables(...)
       result[key] = value           end end
   return result                             end
 
-local keymap              = vim.keymap.set
+
+-- Variables
+
+local keymap = vim.keymap.set
+
 local opts_silent_noremap   = { noremap = true, silent = true }
-local opts_noremap  = { noremap = true                }
+local opts_noremap          = { noremap = true                }
 
 
 -- Vim hotkeys
