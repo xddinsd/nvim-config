@@ -68,6 +68,31 @@ local opts_noremap          = { noremap = true                }
 
 
 -- Nvim shortcuts
+
+    keymap(
+        'n',
+        '<leader>w',
+        ':wq<CR>',
+        mergeTables(
+            opts_silent_noremap,
+            { desc = 'Save file & quit'                    } )   )
+
+    keymap(
+        'n',
+        '<leader>q',
+        ':q!<CR>',
+        mergeTables(
+            opts_silent_noremap,
+            { desc = 'Quit (no save)'                      } )   )
+
+    keymap(
+        'n',
+        '<leader>e',
+        ':w<CR>',
+        mergeTables(
+            opts_silent_noremap,
+            { desc = 'Save file'                           } )   )
+
     keymap(
         'n',
         '<C-/>',
