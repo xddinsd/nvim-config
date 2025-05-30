@@ -6,9 +6,10 @@ local format = require("luasnip.extras.fmt").fmta
 
 -- Add snippets
 luasnip.add_snippets("yql", {
-    luasnip.snippet("odsinsert",
-        format(
-            [[
+	luasnip.snippet(
+		"odsinsert",
+		format(
+			[[
             INSERT INTO $dst_table WITH TRUNCATE
             SELECT
                 *
@@ -17,38 +18,28 @@ luasnip.add_snippets("yql", {
             ORDER BY
                 *
             ]],
-            {
-            }                                       ) ),
+			{}
+		)
+	),
 
-    luasnip.snippet("sel",
-        format(
-            "<select_field>",
-            {
-                select_field = luasnip.choice_node(
-                    1,
-                    {
-                        format(
-                            "$to_str(<field_name>) AS <field_name>,",
-                            {
-                                field_name = luasnip.insert_node(
-                                    1,
-                                    "utf8_id"                       )
-                            },
-                            { repeat_duplicates = true }                ),
-                        format(
-                            "<field_name> AS <field_name>,",
-                            {
-                                field_name = luasnip.insert_node(
-                                    1,
-                                    "created_at"                    )
-                            },
-                            { repeat_duplicates = true }                )
+	luasnip.snippet(
+		"sel",
+		format("<select_field>", {
+			select_field = luasnip.choice_node(1, {
+				format("$to_str(<field_name>) AS <field_name>,", {
+					field_name = luasnip.insert_node(1, "utf8_id"),
+				}, { repeat_duplicates = true }),
+				format("<field_name> AS <field_name>,", {
+					field_name = luasnip.insert_node(1, "created_at"),
+				}, { repeat_duplicates = true }),
+			}),
+		})
+	),
 
-                    }                                                           )   } ) ),
-
-    luasnip.snippet("odslibs",
-        format(
-            [[
+	luasnip.snippet(
+		"odslibs",
+		format(
+			[[
 
             PRAGMA Library("helpers.sql" );
             PRAGMA Library("datetime.sql");
@@ -59,10 +50,10 @@ luasnip.add_snippets("yql", {
             IMPORT `datetime`   SYMBOLS $from_utc_ts_to_msk_dt;
 
             ]],
-            {
-            }                                           ) ),    } )
+			{}
+		)
+	),
+})
 
 -- sql -> yql. Also filetype_extend func is available
-luasnip.filetype_set("sql", {"yql"})
-
-
+luasnip.filetype_set("sql", { "yql" })
