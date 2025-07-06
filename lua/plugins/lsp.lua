@@ -45,6 +45,7 @@ return {
 			-- nvim_lsp.pylyzer        .setup{capabilities = capabilities} -- Python
 
 			nvim_lsp.rust_analyzer.setup({ capabilities = capabilities })
+			nvim_lsp.kotlin_language_server.setup({ capabilities = capabilities })
 		end,
 	},
 
