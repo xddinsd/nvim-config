@@ -41,9 +41,9 @@ return {
 				terraform = {
 					require("formatter.filetypes.terraform").terraformfmt,
 				},
-				-- kotlin = {
-				-- 	require("formatter.filetypes.kotlin").ktlint,
-				-- },
+				kotlin = {
+					require("formatter.filetypes.kotlin").ktlint,
+				},
 				["*"] = {
 					require("formatter.filetypes.any").remove_trailing_whitespace,
 				},
