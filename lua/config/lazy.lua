@@ -1,3 +1,7 @@
+--
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+--
 -- Clone and install lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- If no folder
@@ -22,22 +26,41 @@ vim.opt.rtp:prepend(lazypath)
 
 require("config.vim-opts")
 
--- Setup lazy.nvim
+-- Setup lazy.nvim with new plugin structure
 require("lazy").setup({
 	spec = {
-		-- Import plugins
-		{ import = "plugins" },
+		-- Import the new centralized plugins list
+		{ import = "plugins.plugins_list" },
 	},
 
-	-- Colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "tokyo-night" } },
+	-- Colorscheme that will be used when installing plugins
+	install = { colorscheme = { "tokyonight" } },
 
 	-- Automatically check for plugin updates
 	checker = { enabled = true, notify = false },
+
+	-- Performance optimizations for 0.12
+	performance = {
+		cache = {
+			enabled = true,
+		},
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				"matchparen",
+				"netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })
 
 -- Load hotkeys
 require("config.hotkeys")
 
--- Load yql syntax highliting
+-- Load yql syntax highlighting
 require("config.scripts.yql-syntax-highliting.config").setup()
