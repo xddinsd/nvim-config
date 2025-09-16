@@ -2085,17 +2085,13 @@ M["nvim-tree.lua"] = function()
 			sorter = "case_sensitive",
 		},
 		view = {
-			width = 30,
+			width = 40,
 		},
 		renderer = {
-			group_empty = true,
-			highlight_git = false,
-			full_name = false,
-			highlight_opened_files = "none",
 			root_folder_label = ":~:s?$?/..?",
 			indent_width = 4,
 			indent_markers = {
-				enable = false,
+				enable = true,
 				inline_arrows = true,
 				icons = {
 					corner = "└",
@@ -2105,64 +2101,10 @@ M["nvim-tree.lua"] = function()
 					none = " ",
 				},
 			},
-			icons = {
-				webdev_colors = true,
-				git_placement = "before",
-				modified_placement = "after",
-				padding = " ",
-				symlink_arrow = " ➛ ",
-				show = {
-					file = true,
-					folder = true,
-					folder_arrow = true,
-					git = true,
-					modified = true,
-				},
-				glyphs = {
-					default = "",
-					symlink = "",
-					bookmark = "",
-					modified = "●",
-					folder = {
-						arrow_closed = "",
-						arrow_open = "",
-						default = "",
-						open = "",
-						empty = "",
-						empty_open = "",
-						symlink = "",
-						symlink_open = "",
-					},
-					git = {
-						unstaged = "✗",
-						staged = "✓",
-						unmerged = "",
-						renamed = "➜",
-						untracked = "★",
-						deleted = "",
-						ignored = "◌",
-					},
-				},
-			},
 			special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
 			symlink_destination = true,
 		},
-		filters = {
-			dotfiles = false,
-			git_clean = false,
-			no_buffer = false,
-			custom = {},
-			exclude = {},
-		},
 		disable_netrw = true,
-		hijack_netrw = true,
-		hijack_cursor = false,
-		update_cwd = false,
-		update_focused_file = {
-			enable = false,
-			update_cwd = false,
-			ignore_list = {},
-		},
 		git = {
 			enable = true,
 			ignore = true,
@@ -2196,7 +2138,7 @@ M["nvim-tree.lua"] = function()
 				},
 			},
 			open_file = {
-				quit_on_open = false,
+				quit_on_open = true,
 				resize_window = true,
 				window_picker = {
 					enable = true,
@@ -2231,8 +2173,8 @@ M["nvim-tree.lua"] = function()
 		},
 		ui = {
 			confirm = {
-				remove = true,
-				trash = true,
+				remove = false,
+				trash = false,
 			},
 		},
 	})
@@ -2559,7 +2501,6 @@ M["which-key.nvim"] = function()
 				suggestions = 20,
 			},
 			presets = {
-				operators = false,
 				motions = false,
 				text_objects = false,
 				windows = true,
@@ -2568,27 +2509,10 @@ M["which-key.nvim"] = function()
 				g = true,
 			},
 		},
-		operators = { gc = "Comments" },
-		key_labels = {},
-		motions = {
-			count = true,
-		},
 		icons = {
 			breadcrumb = "»",
 			separator = "➜",
 			group = "+",
-		},
-		popup_mappings = {
-			scroll_down = "<c-d>",
-			scroll_up = "<c-u>",
-		},
-		window = {
-			border = "rounded",
-			position = "bottom",
-			margin = { 1, 0, 1, 0 },
-			padding = { 1, 2, 1, 2 },
-			winblend = 0,
-			zindex = 1000,
 		},
 		layout = {
 			height = { min = 4, max = 25 },
@@ -2596,24 +2520,8 @@ M["which-key.nvim"] = function()
 			spacing = 3,
 			align = "left",
 		},
-		ignore_missing = true,
-		hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "^:", "^ ", "^call ", "^lua " },
 		show_help = true,
 		show_keys = true,
-		triggers = "auto",
-		triggers_nowait = {
-			"`",
-			"'",
-			"g`",
-			"g'",
-			'"',
-			"<c-r>",
-			"z=",
-		},
-		triggers_blacklist = {
-			i = { "j", "k" },
-			v = { "j", "k" },
-		},
 		disable = {
 			buftypes = {},
 			filetypes = {},

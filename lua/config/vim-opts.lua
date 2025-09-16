@@ -73,6 +73,9 @@ vim.opt.autoindent = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Add 24-bit color support
+vim.opt.termguicolors = true
+
 -- Use OS clipboard buffer
 vim.opt.clipboard = "unnamedplus"
 
@@ -92,13 +95,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function()
 		vim.cmd("%s/\\s\\+$//e")
-	end,
-})
-
--- Autocmd for firenvim font fix (https://github.com/glacambre/firenvim/issues/972)
-vim.api.nvim_create_autocmd("UIEnter", {
-	pattern = "*",
-	callback = function()
-		vim.cmd("if exists('g:started_by_firenvim')\nset guifont=Monaco:h18\nendif")
 	end,
 })

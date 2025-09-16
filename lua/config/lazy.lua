@@ -1,7 +1,5 @@
---
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
---
+require("config.vim-opts")
+
 -- Clone and install lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- If no folder
@@ -23,8 +21,6 @@ end
 
 -- Add lazy.nvim folder to runtime
 vim.opt.rtp:prepend(lazypath)
-
-require("config.vim-opts")
 
 -- Setup lazy.nvim with new plugin structure
 require("lazy").setup({
@@ -62,5 +58,3 @@ require("lazy").setup({
 -- Load hotkeys
 require("config.hotkeys")
 
--- Load yql syntax highlighting
-require("config.scripts.yql-syntax-highliting.config").setup()

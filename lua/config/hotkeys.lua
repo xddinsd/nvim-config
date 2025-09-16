@@ -174,7 +174,15 @@ end, { desc = "Goto Symbol (Workspace)" })
 keymap("n", "<leader>fp", "<cmd>Telescope projects<cr>", { desc = "Projects" })
 
 -- File History
-keymap("n", "<leader>fh", "<cmd>Telescope file_history<cr>", { desc = "File History" })
+keymap("n", "<leader>fh", "<cmd>Telescope file_history history<cr>", { desc = "File History" })
+keymap("n", "<leader>sb", ":Telescope file_history backup tag=", { desc = "[File history] Create a backup with a tag" })
+keymap(
+	"n",
+	"<leader>rb",
+	-- Copy all with :%y, :bd! to exit buffer, gg to go to the first line, VG to select all file and _p to paste
+	":%y<CR>:bd!<CR>ggVG_p",
+	{ desc = "[File history] Revert backup - when backup buffer is opened" }
+)
 
 -- ================================================================================
 -- NVIM-TREE
@@ -625,6 +633,9 @@ keymap("n", "<leader>Dat", "<cmd>!curl -X GET <C-r><C-w><cr>", { desc = "Test AP
 -- QUICK ACTIONS
 -- ================================================================================
 
+-- Add empty line below cursor
+keymap("n", "<CR>", "mzo<esc>`z", { desc = "Add new line below current line" })
+
 -- Quick save and format
 keymap("n", "<leader><leader>", function()
 	vim.cmd("write")
@@ -636,8 +647,19 @@ end, { desc = "Save & Format" })
 keymap("n", "*", "*<C-o>", { desc = "Search word forward" })
 keymap("n", "#", "#<C-o>", { desc = "Search word backward" })
 
--- Better paste in visual mode
-keymap("v", "p", '"_dP', { desc = "Better paste" })
+-- Removing without copy            for p, d, x
+-- Removing with    copy as usual   for P, D, X
+keymap("v", "p", '"_dP', { desc = "Paste" })
+
+keymap({ "n", "v" }, "d", '"_d', { desc = "Delete" })
+
+keymap({ "n", "v" }, "x", '"_x', { desc = "Cut" })
+
+keymap("v", "P", '"p', { desc = "Paste and copy selected area" })
+
+keymap({ "n", "v" }, "D", "d", { desc = "Delete and copy selected area" })
+
+keymap({ "n", "v" }, "X", "x", { desc = "Cut and copy selected area" })
 
 -- Add undo break-points
 keymap("i", ",", ",<c-g>u")
@@ -721,23 +743,6 @@ keymap("n", "<leader>R", function()
 	dofile(vim.env.MYVIMRC)
 	print("Config reloaded!")
 end, { desc = "Reload config" })
-
--- Toggle quickfix list
-keymap("n", "<leader>q", function()
-	local qf_exists = false
-	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_exists = true
-		end
-	end
-	if qf_exists == true then
-		vim.cmd("cclose")
-		return
-	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then
-		vim.cmd("copen")
-	end
-end, { desc = "Toggle quickfix" })
 
 -- ================================================================================
 -- AUTO COMMANDS FOR KEYMAPS
@@ -1037,29 +1042,29 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 -- Set up which-key descriptions for leader groups
 local wk = require("which-key")
-wk.register({
-	["<leader>"] = {
-		b = { name = "+buffer" },
-		c = { name = "+code" },
-		d = { name = "+debug" },
-		f = { name = "+file/find" },
-		g = { name = "+git" },
-		h = { name = "+harpoon" },
-		l = { name = "+lazy" },
-		m = { name = "+minimap" },
-		q = { name = "+quit/session" },
-		r = { name = "+run" },
-		s = { name = "+search" },
-		t = { name = "+terminal" },
-		T = { name = "+test" },
-		u = { name = "+ui" },
-		w = { name = "+windows" },
-		x = { name = "+trouble" },
-		y = { name = "+yank" },
-		D = { name = "+data-engineering" },
-		C = { name = "+coverage" },
-	},
-})
+wk.add(
+  {
+    { "<leader>C", group = "coverage" },
+    { "<leader>D", group = "data-engineering" },
+    { "<leader>T", group = "test" },
+    { "<leader>b", group = "buffer" },
+    { "<leader>c", group = "code" },
+    { "<leader>d", group = "debug" },
+    { "<leader>f", group = "file/find" },
+    { "<leader>g", group = "git" },
+    { "<leader>h", group = "harpoon" },
+    { "<leader>l", group = "lazy" },
+    { "<leader>m", group = "minimap" },
+    { "<leader>q", group = "quit/session" },
+    { "<leader>r", group = "run" },
+    { "<leader>s", group = "search" },
+    { "<leader>t", group = "terminal" },
+    { "<leader>u", group = "ui" },
+    { "<leader>w", group = "windows" },
+    { "<leader>x", group = "trouble" },
+    { "<leader>y", group = "yank" },
+  }
+)
 
 -- ================================================================================
 -- PERFORMANCE OPTIMIZATIONS
