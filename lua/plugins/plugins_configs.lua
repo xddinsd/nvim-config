@@ -553,6 +553,169 @@ M["git-blame.nvim"] = function()
 end
 
 -- ================================================================================
+-- JUPYTER NOTEBOOK
+-- ================================================================================
+M["molten-nvim-init"] = function()
+    vim.keymap.set({ "v", "n" }, "<leader><leader>R", "<Cmd>MoltenEvaluateVisual<CR>")
+
+    vim.g.molten_auto_open_output = false
+    vim.g.molten_image_location = "float"
+    vim.g.molten_image_provider = "image.nvim"
+    vim.g.molten_output_win_border = { "", "━", "", "" }
+    vim.g.molten_output_win_max_height = 12
+    vim.g.molten_virt_text_output = true
+    vim.g.molten_use_border_highlights = true
+    vim.g.molten_virt_lines_off_by_1 = true
+    vim.g.molten_wrap_output = true
+    vim.g.molten_tick_rate = 142
+
+
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "MoltenInitPost",
+        callback = function()
+            local r = require("quarto.runner")
+            local open = false
+            vim.keymap.set("n", "<localleader>ot", function()
+                open = not open
+                vim.fn.MoltenUpdateOption("auto_open_output", open)
+            end)
+
+            if vim.bo.filetype == "python" then
+                vim.fn.MoltenUpdateOption("molten_virt_lines_off_by_1", false)
+                vim.fn.MoltenUpdateOption("molten_virt_text_output", false)
+            end
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*.py",
+        callback = function(e)
+            if string.match(e.file, ".otter.") then
+                return
+            end
+            if require("molten.status").initialized() == "Molten" then
+                vim.fn.MoltenUpdateOption("molten_virt_lines_off_by_1", false)
+                vim.fn.MoltenUpdateOption("molten_virt_text_output", false)
+            end
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = { "*.qmd", "*.md", "*.ipynb" },
+        callback = function()
+            if require("molten.status").initialized() == "Molten" then
+                vim.fn.MoltenUpdateOption("molten_virt_lines_off_by_1", true)
+                vim.fn.MoltenUpdateOption("molten_virt_text_output", true)
+            end
+        end,
+    })
+
+    local imb = function(e)
+        vim.schedule(function()
+            local kernels = vim.fn.MoltenAvailableKernels()
+
+            local try_kernel_name = function()
+                local metadata = vim.json.decode(io.open(e.file, "r"):read("a"))["metadata"]
+                return metadata.kernelspec.name
+            end
+            local ok, kernel_name = pcall(try_kernel_name)
+
+            if not ok or not vim.tbl_contains(kernels, kernel_name) then
+                kernel_name = nil
+                local venv = os.getenv("VIRTUAL_ENV")
+                if venv ~= nil then
+                    kernel_name = string.match(venv, "/.+/(.+)")
+                end
+            end
+
+            if kernel_name ~= nil and vim.tbl_contains(kernels, kernel_name) then
+                vim.cmd(("MoltenInit %s"):format(kernel_name))
+            end
+            vim.cmd("MoltenImportOutput")
+        end)
+    end
+end
+
+M["molten-nvim-config"] = function()
+    vim.api.nvim_create_user_command("MoltenInitPython", function()
+        vim.cmd("MoltenInit python3")
+    end, {})
+end
+
+M["image.nvim"] = function()
+    local image = require("image")
+
+    ---@diagnostic disable-next-line: missing-fields
+    image.setup({
+        backend = "kitty",
+        integrations = {
+            markdown = {
+                enabled = true,
+                clear_in_insert_mode = false,
+                download_remote_images = false,
+                only_render_image_at_cursor = false,
+                filetypes = { "markdown", "quarto" }, -- markdown extensions (ie. quarto) can go here
+            },
+            neorg = {
+                enabled = true,
+                clear_in_insert_mode = false,
+                download_remote_images = false,
+                only_render_image_at_cursor = false,
+                filetypes = { "norg" },
+            },
+        },
+        max_width = 100,
+        max_height = 8,
+        max_height_window_percentage = math.huge,
+        max_width_window_percentage = math.huge,
+        window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
+        editor_only_render_when_focused = true, -- auto show/hide images when the editor gains/looses focus
+        tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+        window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "fidget", "" },
+    })
+end
+
+M["jupytext.nvim"] = {
+    style = "markdown",
+    output_extension = "md",
+    force_ft = "markdown",
+}
+
+M["quatro-nvim"] = function()
+    local quarto = require("quarto")
+    quarto.setup({
+        lspFeatures = {
+            languages = { "python", "lua" },
+            chunks = "all", -- 'curly' or 'all'
+            diagnostics = {
+                enabled = true,
+                triggers = { "BufWritePost" },
+            },
+            completion = {
+                enabled = true,
+            },
+        },
+        keymap = {
+            hover = "H",
+            definition = "gd",
+            rename = "<leader>rn",
+            references = "gr",
+            format = "<leader>gf",
+        },
+        codeRunner = {
+            enabled = true,
+            ft_runners = {
+                bash = "slime",
+            },
+            default_method = "molten",
+        },
+    })
+
+    -- for more keybinds that I would use in a quarto document, see the configuration for molten
+    require("benlubas.hydra.notebook")
+end
+
+-- ================================================================================
 -- DATA ENGINEERING & DEVOPS
 -- ================================================================================
 

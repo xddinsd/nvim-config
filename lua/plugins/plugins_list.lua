@@ -111,9 +111,42 @@ return {
 	},
 
 	-- ================================================================================
+	-- JUPYTER NOTEBOOK
+	-- ================================================================================
+    {
+        "benlubas/molten-nvim",
+        dependencies = { "image.nvim" },
+        ft = { "python", "norg", "markdown", "quarto" }, -- this is just to avoid loading image.nvim, loading molten at the start has minimal startup time impact
+        init = configs["molten-nvim-init"],
+    },
+    {
+        "3rd/image.nvim",
+        dependencies = { "https://github.com/leafo/magick" },
+        ft = { "markdown", "norg" },
+        config = configs["image.nvim"]
+    },
+    {
+        "GCBallesteros/jupytext.nvim",
+        -- ft = { "ipynb" },
+        opts = configs["jupytext.nvim"]
+    },
+    {
+        "quarto-dev/quarto-nvim",
+        dependencies = {
+            "nvim-lspconfig",
+            "nvimtools/hydra.nvim",
+            "otter.nvim",
+        },
+        ft = { "quarto", "markdown", "norg" },
+        config = configs["quarto-nvim"],
+    },
+    { "jmbuhr/otter.nvim", ft = { "markdown", "quarto", "norg" }},
+
+	-- ================================================================================
 	-- DATA ENGINEERING & DEVOPS
 	-- ================================================================================
-	{
+
+    {
 		"mgierada/lazydocker.nvim",
 		dependencies = { "akinsho/toggleterm.nvim" },
 		config = configs["lazydocker.nvim"],
@@ -469,6 +502,7 @@ return {
 		build = "cd app && npm install",
 		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
+            vim.g.mkdp_browser = "firefox"
 		end,
 		ft = { "markdown" },
 		config = configs["markdown-preview.nvim"],

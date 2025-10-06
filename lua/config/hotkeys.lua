@@ -195,7 +195,6 @@ keymap("n", "<leader>E", "<cmd>NvimTreeFindFile<cr>", { desc = "Explorer (curren
 -- TOGGLETERM
 -- ================================================================================
 
-keymap("n", "<leader>t", "", { desc = "+terminal" })
 keymap("n", "<leader>tt", "<cmd>ToggleTerm direction=float<cr>", { desc = "Terminal (float)" })
 keymap("n", "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", { desc = "Terminal (horizontal)" })
 keymap("n", "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", { desc = "Terminal (vertical)" })
@@ -210,7 +209,6 @@ keymap("n", "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", { de
 -- GIT INTEGRATION
 -- ================================================================================
 
-keymap("n", "<leader>g", "", { desc = "+git" })
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<cr>", { desc = "Lazygit" })
 keymap(
 	"n",
@@ -236,7 +234,6 @@ keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", { desc = "Git Diff"
 -- TROUBLE
 -- ================================================================================
 
-keymap("n", "<leader>x", "", { desc = "+trouble" })
 keymap("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 keymap("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
 keymap("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
@@ -273,7 +270,6 @@ end, { desc = "Toggle Flash Search" })
 -- HARPOON
 -- ================================================================================
 
-keymap("n", "<leader>h", "", { desc = "+harpoon" })
 keymap("n", "<leader>ha", function()
 	require("harpoon"):list():add()
 end, { desc = "Add file" })
@@ -327,7 +323,6 @@ end, { desc = "Format" })
 -- TESTING (NEOTEST)
 -- ================================================================================
 
-keymap("n", "<leader>T", "", { desc = "+test" })
 keymap("n", "<leader>Tt", function()
 	require("neotest").run.run(vim.fn.expand("%"))
 end, { desc = "Run File" })
@@ -360,7 +355,6 @@ end, { desc = "Toggle Watch" })
 -- DEBUGGING (DAP)
 -- ================================================================================
 
-keymap("n", "<leader>d", "", { desc = "+debug" })
 keymap("n", "<leader>dB", function()
 	require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 end, { desc = "Breakpoint Condition" })
@@ -422,7 +416,6 @@ end, { desc = "Eval" })
 -- COVERAGE
 -- ================================================================================
 
-keymap("n", "<leader>C", "", { desc = "+coverage" })
 keymap("n", "<leader>Cl", function()
 	require("coverage").load(true)
 end, { desc = "Load Coverage" })
@@ -488,7 +481,6 @@ end, { desc = "Toggle minimap" })
 -- UI TOGGLES
 -- ================================================================================
 
-keymap("n", "<leader>u", "", { desc = "+ui" })
 keymap("n", "<leader>ub", function()
 	vim.o.background = vim.o.background == "dark" and "light" or "dark"
 	print("Background: " .. vim.o.background)
@@ -569,7 +561,6 @@ end, { desc = "Toggle Word Wrap" })
 -- WINDOW MANAGEMENT
 -- ================================================================================
 
-keymap("n", "<leader>w", "", { desc = "+windows" })
 keymap("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
 keymap("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
 keymap("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
@@ -581,7 +572,6 @@ keymap("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 -- TABS
 -- ================================================================================
 
-keymap("n", "<leader><tab>", "", { desc = "+tabs" })
 keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
 keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
 keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
@@ -590,43 +580,76 @@ keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- ================================================================================
+-- JUPYTER KEYMAPS
+-- ================================================================================
+local quarto = require("quarto")
+local quarto_runner = require("quarto.runner")
+
+keymap("n", "<leader>jii", ":MoltenInit<CR>", { desc = "Initialize", silent = true })
+keymap(
+    "n",
+    "<leader>jip",
+    function()
+        local venv = os.getenv("VIRTUAL_ENV")
+        if venv ~= nil then
+            venv = string.match(venv, "/.+/(.+)")
+            vim.cmd(("MoltenInit %s"):format(venv))
+        else
+            vim.cmd("MoltenInit python3")
+        end
+    end,
+    { desc = "Initialize python3", silent = true, noremap = true }
+)
+keymap("n", "<leader>jc", "i`<c-j>",            { desc = "Create a new code cell", silent = true })
+keymap("n", "<leader>js", "i```\r\r```{}<left>",{ desc = "Split code cell", silent = true, noremap = true })
+keymap("n", "<leader>jd", ":MoltenDelete<CR>", { desc = "Delete cell", silent = true })
+keymap("n", "<leader>je", ":MoltenEvaluateOperator<CR>",{ desc = "Evaluate operator", silent = true })
+keymap("v", "<leader>jr", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "Execute visual selection", silent = true })
+keymap("n", "<leader>jrc", quarto_runner.run_cell, { desc = "Run cell", silent = true })
+keymap("n", "<leader>jra", quarto_runner.run_above, { desc = "Run cell and above", silent = true })
+keymap("n", "<leader>jrb", quarto_runner.run_below, { desc = "Run cell and below", silent = true })
+keymap("n", "<leader>jrl", quarto_runner.run_line, { desc = "Run line", silent = true })
+keymap("n", "<leader>jrA", quarto_runner.run_all, { desc = "Run all cells", silent = true })
+keymap("n", "<leader>jrr", function()
+    r.run_all(true)
+end, { desc = "Run all cells of all languages", silent = true })
+
+keymap("n", "<leader>jre", ":MoltenReevaluateCell<CR>", { desc = "Re-eval cell", silent = true })
+keymap("n", "<leader>jos", ":noautocmd MoltenEnterOutput<CR>",{ desc = "Open output window", silent = true })
+keymap("n", "<leader>joh", ":MoltenHideOutput<CR>", { desc = "Close output window", silent = true })
+keymap("n", "<leader>jqp", quarto.quartoPreview,{ desc = "Preview the Quarto document", silent = true, noremap = true })
+
+-- ================================================================================
 -- DATA ENGINEERING SPECIFIC KEYMAPS
 -- ================================================================================
 
-keymap("n", "<leader>D", "", { desc = "+data-engineering" })
 
 -- Python Data Science
-keymap("n", "<leader>Dp", "", { desc = "+python" })
 keymap("n", "<leader>Dpr", "<cmd>lua require('dap-python').test_method()<cr>", { desc = "Test Method" })
 keymap("n", "<leader>Dpc", "<cmd>lua require('dap-python').test_class()<cr>", { desc = "Test Class" })
 keymap("n", "<leader>Dps", "<cmd>lua require('dap-python').debug_selection()<cr>", { desc = "Debug Selection" })
 
 -- SQL/Database
-keymap("n", "<leader>Ds", "", { desc = "+sql" })
 keymap("n", "<leader>Dse", "<cmd>SqlsExecuteQuery<cr>", { desc = "Execute Query" })
 keymap("n", "<leader>Dsc", "<cmd>SqlsExecuteQueryVertical<cr>", { desc = "Execute Query Vertical" })
 keymap("v", "<leader>Dse", "<cmd>SqlsExecuteQuery<cr>", { desc = "Execute Selection" })
 
 -- Docker
-keymap("n", "<leader>Dd", "", { desc = "+docker" })
 keymap("n", "<leader>Ddb", "<cmd>!docker build -t %:t:r .<cr>", { desc = "Build Image" })
 keymap("n", "<leader>Ddr", "<cmd>!docker run -it %:t:r<cr>", { desc = "Run Container" })
 keymap("n", "<leader>Ddp", "<cmd>!docker ps<cr>", { desc = "List Containers" })
 
 -- Kubernetes
-keymap("n", "<leader>Dk", "", { desc = "+kubernetes" })
 keymap("n", "<leader>Dka", "<cmd>!kubectl apply -f %<cr>", { desc = "Apply Resource" })
 keymap("n", "<leader>Dkd", "<cmd>!kubectl delete -f %<cr>", { desc = "Delete Resource" })
 keymap("n", "<leader>Dkp", "<cmd>!kubectl get pods<cr>", { desc = "Get Pods" })
 keymap("n", "<leader>Dks", "<cmd>!kubectl get services<cr>", { desc = "Get Services" })
 
 -- Big Data Tools
-keymap("n", "<leader>Db", "", { desc = "+big-data" })
 keymap("n", "<leader>Dbs", "<cmd>!spark-submit %<cr>", { desc = "Submit Spark Job" })
 keymap("n", "<leader>Dbh", "<cmd>!hdfs dfs -ls<cr>", { desc = "List HDFS" })
 
 -- API Testing
-keymap("n", "<leader>Da", "", { desc = "+api" })
 keymap("n", "<leader>Dat", "<cmd>!curl -X GET <C-r><C-w><cr>", { desc = "Test API Endpoint" })
 
 -- ================================================================================
@@ -1046,6 +1069,12 @@ wk.add(
   {
     { "<leader>C", group = "coverage" },
     { "<leader>D", group = "data-engineering" },
+    {"<leader>Da", group = "api" },
+    {"<leader>Db", group = "big-data" },
+    {"<leader>Dd", group = "docker" },
+    {"<leader>Dk", group = "kubernetes"},
+    {"<leader>Dp", group = "python" },
+    {"<leader>Ds", group = "sql" },
     { "<leader>T", group = "test" },
     { "<leader>b", group = "buffer" },
     { "<leader>c", group = "code" },
@@ -1053,6 +1082,11 @@ wk.add(
     { "<leader>f", group = "file/find" },
     { "<leader>g", group = "git" },
     { "<leader>h", group = "harpoon" },
+    { "<leader>j", group = "jupyter" },
+    {"<leader>jr", group = "run" },
+    {"<leader>jo", group = "output" },
+    {"<leader>ji", group = "initialize" },
+    {"<leader>jq", group = "quarto" },
     { "<leader>l", group = "lazy" },
     { "<leader>m", group = "minimap" },
     { "<leader>q", group = "quit/session" },
@@ -1063,6 +1097,7 @@ wk.add(
     { "<leader>w", group = "windows" },
     { "<leader>x", group = "trouble" },
     { "<leader>y", group = "yank" },
+    {"<leader><tab>", group = "tabs" },
   }
 )
 
