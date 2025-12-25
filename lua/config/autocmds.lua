@@ -789,17 +789,17 @@ autocmd("VimEnter", {
 -- ================================================================================
 
 -- Set working directory to project root
-autocmd("BufEnter", {
-	group = augroup("AutoCwd", {}),
-	callback = function()
-		local root_patterns = { ".git", "pyproject.toml", "package.json", "Cargo.toml", "go.mod", "dbt_project.yml" }
-		local root = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
-
-		if root and root ~= vim.fn.getcwd() then
-			vim.api.nvim_set_current_dir(root)
-		end
-	end,
-})
+-- autocmd("BufEnter", {
+-- 	group = augroup("AutoCwd", {}),
+-- 	callback = function()
+-- 		local root_patterns = { ".git", "pyproject.toml", "package.json", "Cargo.toml", "go.mod", "dbt_project.yml" }
+-- 		local root = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
+--
+-- 		if root and root ~= vim.fn.getcwd() then
+-- 			vim.api.nvim_set_current_dir(root)
+-- 		end
+-- 	end,
+-- })
 
 -- ================================================================================
 -- ERROR HANDLING

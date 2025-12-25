@@ -556,9 +556,8 @@ end
 -- JUPYTER NOTEBOOK
 -- ================================================================================
 M["molten-nvim-init"] = function()
-    vim.keymap.set({ "v", "n" }, "<leader><leader>R", "<Cmd>MoltenEvaluateVisual<CR>")
-
     vim.g.molten_auto_open_output = false
+    vim.g.molten_enter_output_behavior = "open_and_enter"
     vim.g.molten_image_location = "float"
     vim.g.molten_image_provider = "image.nvim"
     vim.g.molten_output_win_border = { "", "━", "", "" }
@@ -574,11 +573,6 @@ M["molten-nvim-init"] = function()
         pattern = "MoltenInitPost",
         callback = function()
             local r = require("quarto.runner")
-            local open = false
-            vim.keymap.set("n", "<localleader>ot", function()
-                open = not open
-                vim.fn.MoltenUpdateOption("auto_open_output", open)
-            end)
 
             if vim.bo.filetype == "python" then
                 vim.fn.MoltenUpdateOption("molten_virt_lines_off_by_1", false)
@@ -766,25 +760,6 @@ M["yaml-companion.nvim"] = function()
 	})
 
 	require("telescope").load_extension("yaml_schema")
-end
-
-M["vim-dadbod-ui"] = function()
-	vim.g.db_ui_use_nerd_fonts = 1
-	vim.g.db_ui_show_database_icon = 1
-	vim.g.db_ui_force_echo_notifications = 1
-	vim.g.db_ui_win_position = "left"
-	vim.g.db_ui_winwidth = 80
-
-	vim.g.db_ui_table_helpers = {
-		mysql = {
-			Count = "select count(1) from {optional_schema}{table}",
-			Explain = "explain {last_query}",
-		},
-		postgresql = {
-			Count = "select count(1) from {optional_schema}{table}",
-			Explain = "explain (analyze, buffers) {last_query}",
-		},
-	}
 end
 
 M["rest.nvim"] = function()
@@ -1107,6 +1082,17 @@ M["persistence.nvim"] = function()
 	})
 end
 
+M["uv.nvim"] = function()
+    require('uv').setup({
+        auto_activate_venv = true,
+        notify_activate_venv = true,
+        picker_integration = true,
+        keymaps = {
+            prefix = "<leader>Dpu",
+        }
+    })
+end
+
 -- ================================================================================
 -- DIAGNOSTICS & TROUBLE
 -- ================================================================================
@@ -1116,7 +1102,6 @@ M["trouble.nvim"] = function()
 		position = "bottom",
 		height = 10,
 		width = 50,
-		icons = true,
 		mode = "workspace_diagnostics",
 		severity = nil,
 		fold_open = "",
@@ -1514,28 +1499,8 @@ end
 
 M["nvim-dap-python"] = function()
 	local dap_python = require("dap-python")
-	local python_path = "/usr/bin/python"
+	local python_path = "/usr/bin/python3"
 	dap_python.setup(python_path)
-
-	table.insert(dap_python.configurations, {
-		type = "python",
-		request = "launch",
-		name = "Launch file with arguments",
-		program = "${file}",
-		args = function()
-			local args_string = vim.fn.input("Arguments: ")
-			return vim.split(args_string, " +")
-		end,
-		console = "integratedTerminal",
-		cwd = "${workspaceFolder}",
-		env = function()
-			local variables = {}
-			for k, v in pairs(vim.fn.environ()) do
-				table.insert(variables, string.format("%s=%s", k, v))
-			end
-			return variables
-		end,
-	})
 end
 
 -- ================================================================================
@@ -2238,6 +2203,20 @@ M["telescope-file-history.nvim"] = function()
 	})
 end
 
+
+M['nvim-neoclip.lua'] = function()
+    require('neoclip').setup({
+        enable_persistent_history = true,
+        continuous_sync = true,
+        initial_mode = 'normal',
+        on_paste = {
+            set_reg = false,
+            move_to_front = true,
+            close_telescope = true,
+        },
+    })
+end
+
 -- ================================================================================
 -- FILE EXPLORER
 -- ================================================================================
@@ -2248,7 +2227,7 @@ M["nvim-tree.lua"] = function()
 			sorter = "case_sensitive",
 		},
 		view = {
-			width = 40,
+            adaptive_size = true,
 		},
 		renderer = {
 			root_folder_label = ":~:s?$?/..?",
@@ -2416,21 +2395,26 @@ M["toggleterm.nvim"] = function()
 	vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 	local Terminal = require("toggleterm.terminal").Terminal
-	local lazygit = Terminal:new({
-		cmd = "lazygit",
-		dir = "git_dir",
-		direction = "float",
-		float_opts = {
-			border = "double",
-		},
-		on_open = function(term)
-			vim.cmd("startinsert!")
-			vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-		end,
-		on_close = function(term)
-			vim.cmd("startinsert!")
-		end,
-	})
+    local Terminal = require("toggleterm.terminal").Terminal
+    local lazygit = Terminal:new({
+        cmd = "lazygit",
+        dir = "git_dir",
+        direction = "float",
+        float_opts = {
+            border = "double",
+        },
+        on_open = function(term)
+            vim.cmd("startinsert!")
+            -- vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
+            vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
+
+            vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<esc>", "<esc>", { noremap = false })
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+        end,
+        on_close = function(term)
+            -- Восстанавливаем маппинги при закрытии (если нужно)
+        end,
+    })
 
 	function _LAZYGIT_TOGGLE()
 		lazygit:toggle()
@@ -2465,7 +2449,8 @@ M["conform.nvim"] = function()
 	require("conform").setup({
 		formatters_by_ft = {
 			lua = { "stylua" },
-			python = { "isort", "black", stop_after_first = true },
+			python = { "isort", "ruff_format", stop_after_first = false },
+			ipynb = { "isort", "ruff_format", stop_after_first = false },
 			rust = { "rustfmt" },
 			javascript = { "prettierd", "prettier", stop_after_first = true },
 			typescript = { "prettierd", "prettier", stop_after_first = true },
@@ -2505,12 +2490,12 @@ M["conform.nvim"] = function()
 		notify_on_error = true,
 		formatters = {
 			injected = { options = { ignore_errors = true } },
-			black = {
-				prepend_args = { "--fast" },
-			},
-			isort = {
-				prepend_args = { "--profile", "black" },
-			},
+			-- black = {
+				-- prepend_args = { "--fast" },
+			-- },
+			-- isort = {
+				-- prepend_args = { "--profile", "black" },
+			-- },
 		},
 	})
 end

@@ -18,7 +18,7 @@ vim.lsp.enable({
 	"ltex",
 
 	-- Languages
-	"pyright",
+	"pylsp",
 	"ruff",
 	"rust_analyzer",
 	"kotlin_language_server",

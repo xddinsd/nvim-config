@@ -168,20 +168,18 @@ return {
 		config = configs["yaml-companion.nvim"],
 	},
 
-	{
-		"kristijanhusak/vim-dadbod-ui",
-		dependencies = {
-			{ "tpope/vim-dadbod", lazy = true },
-			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
-		},
-		cmd = {
-			"DBUI",
-			"DBUIToggle",
-			"DBUIAddConnection",
-			"DBUIFindBuffer",
-		},
-		config = configs["vim-dadbod-ui"],
-	},
+    {
+        "kndndrj/nvim-dbee",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+        },
+        build = function()
+            require("dbee").install()
+        end,
+        config = function()
+            require("dbee").setup()
+        end,
+    },
 
 	{
 		"rest-nvim/rest.nvim",
@@ -269,6 +267,12 @@ return {
 		event = "BufReadPre",
 		config = configs["persistence.nvim"],
 	},
+
+    {
+        'benomahony/uv.nvim',
+		ft = {"python", "ipynb",},
+        config = configs["uv.nvim"],
+    },
 
 	-- ================================================================================
 	-- DIAGNOSTICS & TROUBLE
@@ -413,6 +417,15 @@ return {
 		dependencies = { "nvim-telescope/telescope.nvim" },
 		config = configs["telescope-file-history.nvim"],
 	},
+
+    {
+        "AckslD/nvim-neoclip.lua",
+        dependencies = {
+            {'kkharji/sqlite.lua', module = 'sqlite'},
+            {'nvim-telescope/telescope.nvim'},
+        },
+        config = configs['nvim-neoclip.lua'],
+    },
 
 	-- ================================================================================
 	-- FILE EXPLORER

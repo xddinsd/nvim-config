@@ -14,24 +14,24 @@ keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move to window using the <ctrl> hjkl keys
-keymap("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-keymap("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
-keymap("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
-keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+keymap("n", "<A-h>", "<C-w>h", { desc = "Go to left window" })
+keymap("n", "<A-j>", "<C-w>j", { desc = "Go to lower window" })
+keymap("n", "<A-k>", "<C-w>k", { desc = "Go to upper window" })
+keymap("n", "<A-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Resize window using <ctrl> arrow keys
-keymap("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-keymap("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-keymap("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-keymap("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+keymap("n", "<A-H>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+keymap("n", "<A-J>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+keymap("n", "<A-K>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+keymap("n", "<A-L>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
 
 -- Move Lines
-keymap("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
-keymap("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
-keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
-keymap("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
-keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
-keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })
+keymap("n", "<C-j>", "<cmd>m .+1<cr>==", { desc = "Move line down", silent = true })
+keymap("n", "<C-k>", "<cmd>m .-2<cr>==", { desc = "Move line up", silent = true })
+keymap("i", "<C-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down", silent = true })
+keymap("i", "<C-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up", silent = true })
+keymap("v", "<C-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down", silent = true })
+keymap("v", "<C-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up", silent = true })
 
 -- Buffer navigation
 keymap("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
@@ -49,14 +49,9 @@ keymap("v", ">", ">gv")
 -- Lazy
 keymap("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
--- New file
-keymap("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
-
--- Save file
-keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-
 -- Quit
-keymap("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+keymap("n", "<leader>qq", "<cmd>qa!<cr>", { desc = "Quit all (no save)" })
+keymap("n", "<leader>qw", "<cmd>qa<cr>", { desc = "Quit all" })
 
 -- Highlights under cursor
 keymap("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
@@ -190,6 +185,8 @@ keymap(
 
 keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "Explorer" })
 keymap("n", "<leader>E", "<cmd>NvimTreeFindFile<cr>", { desc = "Explorer (current file)" })
+require("config.hotkey-scripts.open-terminal-in-tree.functions")
+keymap('n', '<leader><CR>', ':lua save_dir_under_nvim_tree_cursor(); open_file_in_nvim_in_new_terminal()<CR>',  { desc = "Explorer - open selected file in dedicated terminal window"})
 
 -- ================================================================================
 -- TOGGLETERM
@@ -600,7 +597,7 @@ keymap(
     end,
     { desc = "Initialize python3", silent = true, noremap = true }
 )
-keymap("n", "<leader>jc", "i`<c-j>",            { desc = "Create a new code cell", silent = true })
+keymap("n", "<leader>jc", "i```python<c-j><c-j>```<Esc>k",            { desc = "Create a new code cell", silent = true })
 keymap("n", "<leader>js", "i```\r\r```{}<left>",{ desc = "Split code cell", silent = true, noremap = true })
 keymap("n", "<leader>jd", ":MoltenDelete<CR>", { desc = "Delete cell", silent = true })
 keymap("n", "<leader>je", ":MoltenEvaluateOperator<CR>",{ desc = "Evaluate operator", silent = true })
@@ -616,7 +613,6 @@ end, { desc = "Run all cells of all languages", silent = true })
 
 keymap("n", "<leader>jre", ":MoltenReevaluateCell<CR>", { desc = "Re-eval cell", silent = true })
 keymap("n", "<leader>jos", ":noautocmd MoltenEnterOutput<CR>",{ desc = "Open output window", silent = true })
-keymap("n", "<leader>joh", ":MoltenHideOutput<CR>", { desc = "Close output window", silent = true })
 keymap("n", "<leader>jqp", quarto.quartoPreview,{ desc = "Preview the Quarto document", silent = true, noremap = true })
 
 -- ================================================================================
@@ -630,10 +626,21 @@ keymap("n", "<leader>Dpc", "<cmd>lua require('dap-python').test_class()<cr>", { 
 keymap("n", "<leader>Dps", "<cmd>lua require('dap-python').debug_selection()<cr>", { desc = "Debug Selection" })
 
 -- SQL/Database
-keymap("n", "<leader>Dse", "<cmd>SqlsExecuteQuery<cr>", { desc = "Execute Query" })
-keymap("n", "<leader>Dsc", "<cmd>SqlsExecuteQueryVertical<cr>", { desc = "Execute Query Vertical" })
-keymap("v", "<leader>Dse", "<cmd>SqlsExecuteQuery<cr>", { desc = "Execute Selection" })
+keymap("n", "<leader>DDe", function()
+  require("dbee").toggle()
+end, { desc = "Toggle UI" })
 
+keymap("n", "<leader>DDr", function()
+  vim.schedule(function()
+    vim.api.nvim_feedkeys("BB", "n", false)
+  end)
+end, { desc = "Run SQL query" })
+
+keymap("v", "<leader>DDr", function()
+  vim.schedule(function()
+    vim.api.nvim_feedkeys("BB", "v", false)
+  end)
+end, { desc = "Run selected SQL" })
 -- Docker
 keymap("n", "<leader>Ddb", "<cmd>!docker build -t %:t:r .<cr>", { desc = "Build Image" })
 keymap("n", "<leader>Ddr", "<cmd>!docker run -it %:t:r<cr>", { desc = "Run Container" })
@@ -670,15 +677,18 @@ end, { desc = "Save & Format" })
 keymap("n", "*", "*<C-o>", { desc = "Search word forward" })
 keymap("n", "#", "#<C-o>", { desc = "Search word backward" })
 
+
+-- Paste with clipboard history
+keymap("n", "P", '<cmd>Telescope neoclip<CR>', { desc = "Paste (History)" })
+keymap("v", "P", '"_d<cmd>Telescope neoclip<CR>', { desc = "Paste (History)" })
+
 -- Removing without copy            for p, d, x
--- Removing with    copy as usual   for P, D, X
+-- Removing with    copy as usual   for D, X
 keymap("v", "p", '"_dP', { desc = "Paste" })
 
 keymap({ "n", "v" }, "d", '"_d', { desc = "Delete" })
 
 keymap({ "n", "v" }, "x", '"_x', { desc = "Cut" })
-
-keymap("v", "P", '"p', { desc = "Paste and copy selected area" })
 
 keymap({ "n", "v" }, "D", "d", { desc = "Delete and copy selected area" })
 
@@ -922,9 +932,6 @@ keymap("n", "<leader>bn", ":enew<CR>", { desc = "New buffer" })
 -- Copy entire buffer to clipboard
 keymap("n", "<leader>by", ":%y+<CR>", { desc = "Copy buffer" })
 
--- Paste from clipboard
-keymap("n", "<leader>bp", '"+p', { desc = "Paste from clipboard" })
-
 -- Select all
 keymap("n", "<C-a>", "ggVG", { desc = "Select all" })
 
@@ -934,9 +941,6 @@ keymap("n", "-", "<C-x>", { desc = "Decrement number" })
 
 -- Join lines without space
 keymap("n", "<leader>J", "gJ", { desc = "Join lines without space" })
-
--- Duplicate line
-keymap("n", "<leader>yl", "yyp", { desc = "Duplicate line" })
 
 -- Delete line without yanking
 keymap("n", "<leader>dl", '"_dd', { desc = "Delete line (no yank)" })
@@ -996,6 +1000,14 @@ keymap(
 -- Search visual selection
 keymap("v", "//", 'y/\\V<C-R>=escape(@","/\\\\")<CR><CR>', { desc = "Search selection" })
 
+
+-- yank all lines by regular expression
+require("config.hotkey-scripts.search-yank.functions")
+keymap('n', '<leader>syl', ":lua yank_lines()<CR>", { desc = "Yank lines that contains at least one symbol with regular expression", noremap = true, silent = false })
+-- yank all by regular expression
+require("config.hotkey-scripts.search-yank.functions")
+keymap('n', '<leader>sys', ":lua yank_strings()<CR>", { desc = "Yank all by regular expression (divided with newline)", noremap = true, silent = false })
+
 -- ================================================================================
 -- NEOVIM SPECIFIC UTILITIES
 -- ================================================================================
@@ -1036,11 +1048,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			keymap("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "Telescope" })
 		end
 
-		-- Additional nvim-tree keymaps if loaded
-		if plugin_loaded("nvim-tree") then
-			keymap("n", "<C-n>", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
-		end
-
 		-- Additional DAP keymaps if loaded
 		if plugin_loaded("dap") then
 			keymap("n", "<F5>", function()
@@ -1067,37 +1074,38 @@ vim.api.nvim_create_autocmd("VimEnter", {
 local wk = require("which-key")
 wk.add(
   {
-    { "<leader>C", group = "coverage" },
-    { "<leader>D", group = "data-engineering" },
-    {"<leader>Da", group = "api" },
-    {"<leader>Db", group = "big-data" },
-    {"<leader>Dd", group = "docker" },
-    {"<leader>Dk", group = "kubernetes"},
-    {"<leader>Dp", group = "python" },
-    {"<leader>Ds", group = "sql" },
-    { "<leader>T", group = "test" },
-    { "<leader>b", group = "buffer" },
-    { "<leader>c", group = "code" },
-    { "<leader>d", group = "debug" },
-    { "<leader>f", group = "file/find" },
-    { "<leader>g", group = "git" },
-    { "<leader>h", group = "harpoon" },
-    { "<leader>j", group = "jupyter" },
-    {"<leader>jr", group = "run" },
-    {"<leader>jo", group = "output" },
-    {"<leader>ji", group = "initialize" },
-    {"<leader>jq", group = "quarto" },
-    { "<leader>l", group = "lazy" },
-    { "<leader>m", group = "minimap" },
-    { "<leader>q", group = "quit/session" },
-    { "<leader>r", group = "run" },
-    { "<leader>s", group = "search" },
-    { "<leader>t", group = "terminal" },
-    { "<leader>u", group = "ui" },
-    { "<leader>w", group = "windows" },
-    { "<leader>x", group = "trouble" },
-    { "<leader>y", group = "yank" },
-    {"<leader><tab>", group = "tabs" },
+    {  "<leader>C", group = "coverage" },
+    {  "<leader>D", group = "data-engineering" },
+    { "<leader>Da", group = "api" },
+    { "<leader>Db", group = "big-data" },
+    { "<leader>Dd", group = "docker" },
+    { "<leader>Dk", group = "kubernetes"},
+    { "<leader>Dp", group = "python" },
+    {"<leader>Dpu", group = "uv" },
+    { "<leader>DD", group = "Dbee(dbeaver in nvim)" },
+    {  "<leader>T", group = "test" },
+    {  "<leader>b", group = "buffer" },
+    {  "<leader>c", group = "code" },
+    {  "<leader>d", group = "debug" },
+    {  "<leader>f", group = "file/find" },
+    {  "<leader>g", group = "git" },
+    {  "<leader>h", group = "harpoon" },
+    {  "<leader>j", group = "jupyter" },
+    { "<leader>jr", group = "run" },
+    { "<leader>jo", group = "output" },
+    { "<leader>ji", group = "initialize" },
+    { "<leader>jq", group = "quarto" },
+    {  "<leader>l", group = "lazy" },
+    {  "<leader>m", group = "minimap" },
+    {  "<leader>q", group = "quit/session" },
+    {  "<leader>r", group = "run" },
+    {  "<leader>s", group = "search" },
+    {  "<leader>t", group = "terminal" },
+    {  "<leader>u", group = "ui" },
+    {  "<leader>w", group = "windows" },
+    {  "<leader>x", group = "trouble" },
+    {  "<leader>y", group = "yank" },
+    { "<leader><tab>", group = "tabs" },
   }
 )
 
